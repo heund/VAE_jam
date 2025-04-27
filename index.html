@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIDI Jam Session ML</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Core dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@1.23.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+<body>
+    <!-- AI Output Log Section -->
+    <div class="ai-output-log">
+        <h3>AI Output Log</h3>
+        
+        <!-- Model Status Section (Integrated) -->
+        <div class="model-status-integrated">
+            <div class="model-info">
+                <div class="model-item loading" id="rnnStatus">
+                    <span class="status-icon loading"></span>
+                    <div>
+                        <div class="model-name">MusicRNN</div>
+                        <div class="model-type">Sequence Prediction</div>
+                    </div>
+                </div>
+                <div class="model-item loading" id="vaeStatus">
+                    <span class="status-icon loading"></span>
+                    <div>
+                        <div class="model-name">MusicVAE</div>
+                        <div class="model-type">Variational Autoencoder</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="log-container">
+            <div class="log-entry">
+                <div class="log-timestamp">System</div>
+                <div class="log-content">Waiting for input...</div>
+            </div>
+            <div id="log-entries"></div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="piano-container">
+            <canvas id="visualizer"></canvas>
+            <div class="piano-keys"></div>
+        </div>
+        
+
+
+        <div class="ai-interface">
+            <div class="ai-status-display">
+                <div class="ai-container">
+                    <div class="speech-bubble" id="aiBubble">
+                        <p id="aiText">Initializing neural networks...</p>
+                    </div>
+                    <div class="ai-face" id="aiFace">
+                        <div class="pixel-grid">
+                            <!-- Eyes -->
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                            <!-- Mouth -->
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-metrics">
+            <div class="metric">
+                <label>Notes Processed</label>
+                <span class="value" id="notesProcessed">0</span>
+            </div>
+            <div class="metric">
+                <label>Response Time</label>
+                <span class="value" id="responseTime">0ms</span>
+            </div>
+            <div class="metric">
+                <label>ML Confidence</label>
+                <span class="value" id="confidence">0%</span>
+            </div>
+            <div class="metric">
+                <label>Model Status</label>
+                <span class="value" id="modelLoadStatus">Loading...</span>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="temperature" title="Controls how random/creative the AI responses are">Temperature</label>
+                <input type="range" id="temperature" min="0.1" max="2" step="0.1" value="0.8">
+                <span class="value-display" id="temperatureValue">0.8</span>
+            </div>
+            <div class="control-group">
+                <label for="modelConfidence" title="Minimum confidence threshold for ML predictions">Confidence</label>
+                <input type="range" id="modelConfidence" min="0.1" max="1" step="0.1" value="0.5">
+                <span class="value-display" id="confidenceValue">0.5</span>
+            </div>
+            <div class="control-group">
+                <label for="reverb">Reverb</label>
+                <input type="range" id="reverb" min="0" max="1" step="0.1" value="0.3">
+                <span class="value-display" id="reverbValue">0.3</span>
+            </div>
+            <div class="control-group">
+                <label for="volume">Volume</label>
+                <input type="range" id="volume" min="-60" max="0" step="1" value="-6">
+                <span class="value-display" id="volumeValue">-6dB</span>
+            </div>
+            <div class="control-group">
+                <label for="aiMode">ML Mode</label>
+                <select id="aiMode">
+                    <option value="harmony">Neural Harmony</option>
+                    <option value="continue">RNN Continue</option>
+                    <option value="improvise">VAE Improvise</option>
+                    <option value="groove">Groove Transform</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="aiStyle">Style</label>
+                <select id="aiStyle">
+                    <option value="classic">Classic</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="ambient">Ambient</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="startJam" disabled>Start</button>
+            <button id="stopJam">Stop</button>
+        </div>
+        
+
+    </div>
+    <script src="note-validator.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
